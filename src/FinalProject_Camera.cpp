@@ -92,7 +92,16 @@ int main(int argc, const char *argv[])
         DataFrame frame;
         frame.cameraImg = img;
         dataBuffer.push_back(frame);
-
+        
+        // Only hold certain number of images in memory prevent push the memory of the computer to its limit and eventually slow down the entire program.
+        if (dataBuffer.size() == dataBufferSize)
+        {
+            dataBuffer.erase(dataBuffer.begin());
+        }
+        else
+        {
+            dataBuffer.push_back(frame);
+        }
         cout << "#1 : LOAD IMAGE INTO BUFFER done" << endl;
 
 
@@ -154,11 +163,15 @@ int main(int argc, const char *argv[])
 
         if (detectorType.compare("SHITOMASI") == 0)
         {
-            detKeypointsShiTomasi(keypoints, imgGray, false);
+            detKeypointsShiTomasi(keypoints, imgGray, true);
+        }
+        else if (detectorType.compare("HARRIS") == 0)
+        {
+            detKeypointsHarris(keypoints, imgGray, true);
         }
         else
         {
-            //...
+            detKeypointsModern(keypoints, imgGray, detectorType, true);
         }
 
         // optional : limit number of keypoints (helpful for debugging and learning)
