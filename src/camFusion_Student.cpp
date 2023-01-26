@@ -154,5 +154,49 @@ void computeTTCLidar(std::vector<LidarPoint> &lidarPointsPrev,
 
 void matchBoundingBoxes(std::vector<cv::DMatch> &matches, std::map<int, int> &bbBestMatches, DataFrame &prevFrame, DataFrame &currFrame)
 {
-    // ...
+    std::multimap<int, int> record;
+    int n = prevFrame.boundingBoxes.size();
+    for (auto match : matches)
+    {
+        int pre_boxId = -1;
+        int cur_boxId = -1;
+        auto pre_keypoint = prevFrame.keypoints[match.queryIdx];
+        auto cur_keypoint = currFrame.keypoints[match.trainIdx];
+
+        for (auto bbox : prevFrame.boundingBoxes)
+        {
+            if (bbox.roi.contains(pre_keypoint.pt))
+            {
+                pre_boxId = bbox.boxID;
+            }
+        }
+
+        for (auto bbox : currFrame.boundingBoxes)
+        {
+            if (bbox.roi.contains(cur_keypoint.pt))
+            {
+                cur_boxId = bbox.boxID;
+            }
+        }
+
+        if (pre_boxId != -1 && cur_boxId != -1)
+        {
+            record.insert(std::make_pair(pre_boxId, cur_boxId));
+        }
+    }
+
+    for (auto cur_frame_bbox : currFrame.boundingBoxes)
+    {
+        auto matched_idx = record.equal_range(cur_frame_bbox.boxID);
+        std::vector<int> cnt(n + 1, 0);
+
+        for (auto it = matched_idx.second; it != matched_idx.first; it++)
+        {
+            cnt[(*it).first] += 1;
+        }
+
+        std::vector<int>::iterator max_element = std::max_element(cnt.begin(), cnt.end());
+        int max_element_idx = std::distance(cnt.begin(), max_element);
+        bbBestMatches.insert(std::make_pair(max_element_idx, cur_frame_bbox.boxID));
+    }
 }
