@@ -136,6 +136,41 @@ void show3DObjects(std::vector<BoundingBox> &boundingBoxes, cv::Size worldSize, 
 // associate a given bounding box with the keypoints it contains
 void clusterKptMatchesWithROI(BoundingBox &boundingBox, std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPoint> &kptsCurr, std::vector<cv::DMatch> &kptMatches)
 {
+
+    float euclidean_dist = -1;
+    float total_distance = 0;
+    float mean_ratio = 1.4;
+    float mean_dist = 0;
+
+    for (auto match : kptMatches)
+    {
+        if (boundingBox.roi.contains(kptsCurr[match.trainIdx].pt))
+        {
+            boundingBox.kptMatches.emplace_back(match);
+        }
+    }
+
+    // filtering with euclidean distance
+    for (auto match : boundingBox.kptMatches)
+    {
+
+        euclidean_dist = sqrt(pow((kptsCurr.at(match.trainIdx).pt.x - kptsPrev.at(match.queryIdx).pt.x), 2.0) + pow((kptsCurr.at(match.trainIdx).pt.y - kptsPrev.at(match.queryIdx).pt.y), 2.0));
+        total_distance = total_distance + euclidean_dist;
+    }
+
+    mean_dist = total_distance / boundingBox.kptMatches.size();
+
+    int cnt = 0;
+    for (auto match : boundingBox.kptMatches)
+    {
+        euclidean_dist = 0;
+        euclidean_dist = sqrt(pow((kptsCurr.at(match.trainIdx).pt.x - kptsPrev.at(match.queryIdx).pt.x), 2.0) + pow((kptsCurr.at(match.trainIdx).pt.y - kptsPrev.at(match.queryIdx).pt.y), 2.0));
+        cnt++;
+        if (euclidean_dist > (mean_dist * mean_ratio))
+        {
+            boundingBox.kptMatches.erase(boundingBox.kptMatches.begin() + cnt);
+        }
+    }
 }
 
 // Compute time-to-collision (TTC) based on keypoint correspondences in successive images
