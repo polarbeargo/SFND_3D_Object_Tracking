@@ -8,7 +8,44 @@ In this final project, you will implement the missing parts in the schematic. To
 1. First, you will develop a way to match 3D objects over time by using keypoint correspondences. 
 2. Second, you will compute the TTC based on Lidar measurements. 
 3. You will then proceed to do the same using the camera, which requires to first associate keypoint matches to regions of interest and then to compute the TTC based on those matches. 
-4. And lastly, you will conduct various tests with the framework. Your goal is to identify the most suitable detector/descriptor combination for TTC estimation and also to search for problems that can lead to faulty measurements by the camera or Lidar sensor. In the last course of this Nanodegree, you will learn about the Kalman filter, which is a great way to combine the two independent TTC measurements into an improved version which is much more reliable than a single sensor alone can be. But before we think about such things, let us focus on your final project in the camera course. 
+4. And lastly, you will conduct various tests with the framework. Your goal is to identify the most suitable detector/descriptor combination for TTC estimation and also to search for problems that can lead to faulty measurements by the camera or Lidar sensor. In the last course of this Nanodegree, you will learn about the Kalman filter, which is a great way to combine the two independent TTC measurements into an improved version which is much more reliable than a single sensor alone can be. But before we think about such things, let us focus on your final project in the camera course.  
+
+### FP.1 Match 3D Objects  
+We implement the method "matchBoundingBoxes", which takes as input both the previous and the current data frames and provides as output the ids of the matched regions of interest (i.e. the boxID property)“. Matches must be the ones with the highest number of keypoint correspondences.  
+
+camFusion_Student.cpp [line 259](https://github.com/polarbeargo/SFND_3D_Object_Tracking/blob/21e12f93e21be69b61f6474127693df3e10e610d/src/camFusion_Student.cpp#L259) 
+### FP.2 Compute Lidar-based TTC   
+
+camFusion_Student.cpp [line 227](https://github.com/polarbeargo/SFND_3D_Object_Tracking/blob/21e12f93e21be69b61f6474127693df3e10e610d/src/camFusion_Student.cpp#L227) 
+
+### FP.3 Associate Keypoint Correspondences with Bounding Boxes    
+Checking whether the corresponding keypoints are within the region of interest in the camera image. All matches which satisfy this condition should be added to a vector.  
+Compute a robust mean of all the euclidean distances between keypoint matches and then remove those that are too far away from the mean.  
+
+<img src="images/Yolo1.png" width="779" height="414" />  
+<img src="images/yolo2.png" width="779" height="414" />  
+
+camFusion_Student.cpp [line 137](https://github.com/polarbeargo/SFND_3D_Object_Tracking/blob/21e12f93e21be69b61f6474127693df3e10e610d/src/camFusion_Student.cpp#L137)  
+
+### FP.4 Compute Camera-based TTC    
+We compute the TTC estimate once keypoint matches have been added to the bounding boxes.  
+camFusion_Student.cpp [line 177](https://github.com/polarbeargo/SFND_3D_Object_Tracking/blob/21e12f93e21be69b61f6474127693df3e10e610d/src/camFusion_Student.cpp#L177)  
+### FP.5 Performance Evaluation 1
+<img src="images/3D_Objects_id5.png" width="779" height="414" />  
+<img src="images/Top_View_id5.png" width="779" height="414" />  
+<img src="images/FRTTC.png" width="779" height="414" />  
+
+### FP.6 Performance Evaluation 2   
+
+| _Detector_/Descriptor |BRISK	    | BRIEF	  |ORB	    |AKAZE	  |SIFT    |  
+| ----------------------|-----------|---------|---------|---------|--------| 
+| SHI-TOMASI            |        	  |       	 |    	    |       	|       |  
+| HARRIS                |        	  |       	|    	  |      	|       |  
+| **_FAST_**            |        	  |      	|    	  |       	|       |  
+| **_BRISK_**           |           |      	|      	|        |       |  
+| **_ORB_**             |        	  |      	|      	|       	|       |  
+| **_AKAZE_**           |        	  |      	|      	|        |       |  
+| **_SIFT_**            |           |      	|      	|        |       |  
 
 ## Dependencies for Running Locally
 * cmake >= 2.8
