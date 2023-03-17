@@ -14,13 +14,12 @@ In this final project, you will implement the missing parts in the schematic. To
 We implement the method "matchBoundingBoxes", which takes as input both the previous and the current data frames and provides as output the ids of the matched regions of interest (i.e. the boxID property)“. Matches must be the ones with the highest number of keypoint correspondences.  
 
 camFusion_Student.cpp [line 259](https://github.com/polarbeargo/SFND_3D_Object_Tracking/blob/21e12f93e21be69b61f6474127693df3e10e610d/src/camFusion_Student.cpp#L259) 
-### FP.2 Compute Lidar-based TTC   
-
+### FP.2 Compute Lidar-based TTC    
+We compute the time-to-collision in second for all matched 3D objects using only Lidar measurements from the matched bounding boxes between current and previous frame.  
 camFusion_Student.cpp [line 227](https://github.com/polarbeargo/SFND_3D_Object_Tracking/blob/21e12f93e21be69b61f6474127693df3e10e610d/src/camFusion_Student.cpp#L227) 
 
 ### FP.3 Associate Keypoint Correspondences with Bounding Boxes    
-Checking whether the corresponding keypoints are within the region of interest in the camera image. All matches which satisfy this condition should be added to a vector.  
-Compute a robust mean of all the euclidean distances between keypoint matches and then remove those that are too far away from the mean.  
+Checking whether the corresponding keypoints are within the region of interest in the camera image. All matches which satisfy this condition should be added to a vector. Compute a robust mean of all the euclidean distances between keypoint matches and then remove those that are too far away from the mean.  
 
 <img src="images/Yolo1.png" width="779" height="414" />  
 <img src="images/yolo2.png" width="779" height="414" />  
@@ -28,24 +27,28 @@ Compute a robust mean of all the euclidean distances between keypoint matches an
 camFusion_Student.cpp [line 137](https://github.com/polarbeargo/SFND_3D_Object_Tracking/blob/21e12f93e21be69b61f6474127693df3e10e610d/src/camFusion_Student.cpp#L137)  
 
 ### FP.4 Compute Camera-based TTC    
-We compute the TTC estimate once keypoint matches have been added to the bounding boxes.  
+We Compute the time-to-collision in second for all matched 3D objects using only keypoint correspondences from the matched bounding boxes between current and previous frame. 
 camFusion_Student.cpp [line 177](https://github.com/polarbeargo/SFND_3D_Object_Tracking/blob/21e12f93e21be69b61f6474127693df3e10e610d/src/camFusion_Student.cpp#L177)  
-### FP.5 Performance Evaluation 1
+### FP.5 Performance Evaluation 1  
+
 <img src="images/3D_Objects_id5.png" width="779" height="414" />  
 <img src="images/Top_View_id5.png" width="779" height="414" />  
 <img src="images/FRTTC.png" width="779" height="414" />  
 
 ### FP.6 Performance Evaluation 2   
 
-| _Detector_/Descriptor |BRISK	    | BRIEF	  |ORB	    |AKAZE	  |SIFT    |  
-| ----------------------|-----------|---------|---------|---------|--------| 
-| SHI-TOMASI            |        	  |       	 |    	    |       	|       |  
-| HARRIS                |        	  |       	|    	  |      	|       |  
-| **_FAST_**            |        	  |      	|    	  |       	|       |  
-| **_BRISK_**           |           |      	|      	|        |       |  
-| **_ORB_**             |        	  |      	|      	|       	|       |  
-| **_AKAZE_**           |        	  |      	|      	|        |       |  
-| **_SIFT_**            |           |      	|      	|        |       |  
+For 1st and 2nd frame: lidar TTC(s): 12.9721
+
+| Camera TTC(s)           |             |         |             |         |         |         |
+| ----------------------- | ----------- | :-----: | :---------: | :-----: | :-----: | :-----: |
+| **Detector/Descriptor** | BRISK       |  BRIEF  |     ORB     |  FREAK  |  AKAZE  |  SIFT   |
+| SHI-TOMASI              | 119.18      | 16.79   |   15.29     | -3.72   |    X    | 16.15 |
+| HARRIS                  | 10.90       | 10.91   |   x         |    x    |    X    | 10.91 |
+| FAST                    | 11.98       | 10.6507 |   11.6137   | 11.7545 |    X    |  11.99  |
+| BRISK                   | 22.86       | 20.18   | 23.01       | 22.29   |    X    | 29.53   |
+| ORB                     | 16.52       | 19.54   |   -inf      | 10.68   |    X    | -0.31 |
+| AKAZE                   | 13.16       | 14.99   |   16.73     | 11.6351 | 11.8071 | 12.273  |
+| SIFT                    | 22.85       | 11.54   |      X      | 14.76   |    X    | 13.68 | 
 
 ## Dependencies for Running Locally
 * cmake >= 2.8
