@@ -21,8 +21,7 @@ camFusion_Student.cpp [line 227](https://github.com/polarbeargo/SFND_3D_Object_T
 ### FP.3 Associate Keypoint Correspondences with Bounding Boxes    
 Checking whether the corresponding keypoints are within the region of interest in the camera image. All matches which satisfy this condition should be added to a vector. Compute a robust mean of all the euclidean distances between keypoint matches and then remove those that are too far away from the mean.  
 
-<img src="images/Yolo1.png" width="779" height="414" />  
-<img src="images/yolo2.png" width="779" height="414" />  
+<img src="images/Yolo1.png" width="779" height="414" />   
 
 camFusion_Student.cpp [line 137](https://github.com/polarbeargo/SFND_3D_Object_Tracking/blob/21e12f93e21be69b61f6474127693df3e10e610d/src/camFusion_Student.cpp#L137)  
 
