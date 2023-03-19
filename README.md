@@ -29,7 +29,7 @@ camFusion_Student.cpp [line 137](https://github.com/polarbeargo/SFND_3D_Object_T
 We Compute the time-to-collision in second for all matched 3D objects using only keypoint correspondences from the matched bounding boxes between current and previous frame. 
 camFusion_Student.cpp [line 177](https://github.com/polarbeargo/SFND_3D_Object_Tracking/blob/21e12f93e21be69b61f6474127693df3e10e610d/src/camFusion_Student.cpp#L177)  
 ### FP.5 Performance Evaluation 1  
-
+I didn't come across any frames with irrational lidar-TTC results. It helps to take the median number to lessen the influence of outliers.  
 <img src="images/3D_Objects_id5.png" width="779" height="414" />  
 <img src="images/Top_View_id5.png" width="779" height="414" />  
 <img src="images/FRTTC.png" width="779" height="414" />  
