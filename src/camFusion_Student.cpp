@@ -228,32 +228,43 @@ void computeTTCLidar(std::vector<LidarPoint> &lidarPointsPrev,
                      std::vector<LidarPoint> &lidarPointsCurr, double frameRate, double &TTC)
 {
     // auxiliary variables
-    double dT = 0.1;        // time between two measurements in seconds
-    double laneWidth = 4.0; // assumed width of the ego lane
+    double dT = 1 / frameRate; // time between two measurements in seconds
+    double laneWidth = 4.0;    // assumed width of the ego lane
 
+    double edgeCase = (laneWidth) / 2;
+
+    auto check = [&edgeCase](const LidarPoint &lidar_p)
+    { return abs(lidar_p.y) >= edgeCase; };
+
+    lidarPointsPrev.erase(std::remove_if(lidarPointsPrev.begin(), lidarPointsPrev.end(), check),
+                          lidarPointsPrev.end());
+
+    lidarPointsCurr.erase(std::remove_if(lidarPointsCurr.begin(), lidarPointsCurr.end(), check),
+                          lidarPointsCurr.end());
     // find closest distance to Lidar points within ego lane
-    double minXPrev = 1e9, minXCurr = 1e9;
 
-    for (LidarPoint lidar_point : lidarPointsPrev)
+    vector<double> lidarPointsCurrX, lidarPointsPrevX;
+    for (auto it = lidarPointsPrev.begin(); it != lidarPointsPrev.end(); ++it)
+    {
+        lidarPointsPrevX.push_back(it->x);
+    }
+    for (auto it = lidarPointsCurr.begin(); it != lidarPointsCurr.end(); ++it)
     {
 
-        if (abs(lidar_point.y) <= laneWidth / 2.0)
-        { // 3D point within ego lane?
-            minXPrev = minXPrev > lidar_point.x ? lidar_point.x : minXPrev;
-        }
+        lidarPointsCurrX.push_back(it->x);
     }
+    sort(lidarPointsCurrX.begin(), lidarPointsCurrX.end());
+    sort(lidarPointsPrevX.begin(), lidarPointsPrevX.end());
+    int lidarPtCurrSize = lidarPointsCurrX.size();
+    int lidarPtPrevSize = lidarPointsPrevX.size();
 
-    for (LidarPoint lidar_point : lidarPointsCurr)
-    {
-
-        if (abs(lidar_point.y) <= laneWidth / 2.0)
-        { // 3D point within ego lane?
-            minXCurr = minXCurr > lidar_point.x ? lidar_point.x : minXCurr;
-        }
-    }
+    double d1 = lidarPtCurrSize % 2 == 0 ? (lidarPointsCurrX[lidarPtCurrSize / 2 - 1] + lidarPointsCurrX[lidarPtCurrSize / 2]) / 2
+                                         : lidarPointsCurrX[lidarPtCurrSize / 2];
+    double d0 = lidarPtPrevSize % 2 == 0 ? (lidarPointsPrevX[lidarPtPrevSize / 2 - 1] + lidarPointsPrevX[lidarPtPrevSize / 2]) / 2
+                                         : lidarPointsPrevX[lidarPtPrevSize / 2];
 
     // compute TTC from both measurements
-    TTC = minXCurr * dT / (minXPrev - minXCurr);
+    TTC = d1 * dT / (d0 - d1);
 }
 
 void matchBoundingBoxes(std::vector<cv::DMatch> &matches, std::map<int, int> &bbBestMatches, DataFrame &prevFrame, DataFrame &currFrame)
