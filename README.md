@@ -29,10 +29,9 @@ Using just keypoint correspondences from the matched bounding boxes between the 
 ### FP.5 Performance Evaluation 1  
 
 Find examples where the TTC estimate of the Lidar sensor does not seem plausible. Describe your observations and provide a sound argumentation why you think this happened.
-When the lidar returns some spots that are obviously not on the vehicle but are much closer than that, the Lidar TTC estimate becomes implausible. The noise in the lidar scans may be caused by airborne dust particles. A extremely low TTC is the end outcome. By using an average distance rather than the nearest point, we may correct this problem and become more resilient to outliers. There are outliers caused by the lidar scanning the vehicle's other surfaces in addition to its back surface, which is another instance of an unreliable Lidar TTC estimate. For instance, the side mirrors, which appear to be considerably farther away than the real back of the car, are being measured by the lidar.  
-<img src="images/3D_Objects_id5.png" width="779" height="414" />  
-<img src="images/Top_View_id5.png" width="779" height="414" />  
-<img src="images/FRTTC.png" width="779" height="414" />  
+When the lidar returns some spots that are obviously not on the vehicle but are much closer than that, the Lidar TTC estimate becomes implausible. The noise in the lidar scans may be caused by airborne dust particles. A extremely low TTC is the end outcome. By using an average distance rather than the nearest point, we may correct this problem and become more resilient to outliers. There are outliers caused by the lidar scanning the vehicle's other surfaces in addition to its back surface, which is another instance of an unreliable Lidar TTC estimate. For instance, the side mirrors, which appear to be considerably farther away than the real back of the car, are being measured by the lidar. 
+<img src="images/id4.png" width="779" height="414" />  
+<img src="images/id5topview.png" width="779" height="414" />  
 
 ### FP.6 Performance Evaluation 2   
 Run a variety of detector/descriptor combinations and compare the TTC estimation results. Determine which techniques work best and provide various instances when camera-based TTC prediction is wildly inaccurate. Recap your observations and consider possible causes, much like with Lidar.  
@@ -43,8 +42,8 @@ For 1st and 2nd frame: lidar TTC(s): 12.4140
 | ----------------------- | ----------- | :-----: | :---------: | :-----: | :-----: | :-----: |
 | **Detector/Descriptor** | BRISK       |  BRIEF  |     ORB     |  FREAK  |  AKAZE  |  SIFT   |
 | SHI-TOMASI              | 119.18      | 16.79   |   15.29     | -3.72   |    X    | 16.15 |
-| HARRIS                  | 10.90       | 10.91   |   -inf      | -inf    |    X    | 10.91 |
-| FAST                    | 11.98       | 10.6507 |   11.6137   | 11.7545 |    X    |  11.99  |
+| HARRIS                  | 15.14       | 15.32   |   -inf      | -inf    |    X    | 15.32 |
+| FAST                    | 11.98       | 10.65   |   11.61     | 11.75   |    X    |  11.99  |
 | BRISK                   | 22.86       | 20.18   | 23.01       | 22.29   |    X    | 29.53   |
 | ORB                     | 16.52       | 19.54   |   -inf      | 10.68   |    X    | -0.31 |
 | AKAZE                   | 13.16       | 14.99   |   16.73     | 11.6351 | 11.8071 | 12.273  |
@@ -58,6 +57,13 @@ if (distRatios.size() == 0)
   return;
 }
 ```  
+For our aim of identifying keypoints on cars, the TOP 3 detector / descriptor combinations are: 
+ 
+| TOP 3 detector / descriptor |
+| -------------- |
+|   FAST/ BRIEF  |
+|   FAST/ ORB    |
+|   FAST/ FREAK  |
 ## Dependencies for Running Locally
 * cmake >= 2.8
   * All OSes: [click here for installation instructions](https://cmake.org/install/)
