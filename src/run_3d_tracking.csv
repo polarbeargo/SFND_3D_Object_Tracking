@@ -1,0 +1,90 @@
+TTC_Lidar, TTC_Camera
+DetectorType = SHITOMASIDescriptorType = SIFT
+12.414,16.1523
+TTC_Lidar, TTC_Camera
+DetectorType = SHITOMASIDescriptorType = BRIEF
+12.414,16.7981
+TTC_Lidar, TTC_Camera
+DetectorType = SHITOMASIDescriptorType = BRISK
+12.414,119.176
+TTC_Lidar, TTC_Camera
+DetectorType = SHITOMASIDescriptorType = FREAK
+12.414,-3.72106
+TTC_Lidar, TTC_Camera
+DetectorType = SHITOMASIDescriptorType = ORB
+12.414,15.286
+TTC_Lidar, TTC_Camera
+DetectorType = HARRISDescriptorType = SIFT
+12.414,10.9082
+TTC_Lidar, TTC_Camera
+DetectorType = HARRISDescriptorType = BRIEF
+12.414,10.9082
+TTC_Lidar, TTC_Camera
+DetectorType = HARRISDescriptorType = BRISK
+12.414,10.9082
+TTC_Lidar, TTC_Camera
+DetectorType = HARRISDescriptorType = FREAK
+12.414,17.3908
+TTC_Lidar, TTC_Camera
+DetectorType = HARRISDescriptorType = ORB
+12.414,-inf
+TTC_Lidar, TTC_Camera
+DetectorType = SIFTDescriptorType = SIFT
+12.414,13.6843
+TTC_Lidar, TTC_Camera
+DetectorType = SIFTDescriptorType = BRIEF
+12.414,11.5417
+TTC_Lidar, TTC_Camera
+DetectorType = SIFTDescriptorType = BRISK
+12.414,22.8517
+TTC_Lidar, TTC_Camera
+DetectorType = SIFTDescriptorType = FREAK
+12.414,14.7564
+TTC_Lidar, TTC_Camera
+DetectorType = FASTDescriptorType = SIFT
+12.414,12.842
+TTC_Lidar, TTC_Camera
+DetectorType = FASTDescriptorType = BRIEF
+12.414,11.6858
+TTC_Lidar, TTC_Camera
+DetectorType = FASTDescriptorType = BRISK
+12.414,11.9837
+TTC_Lidar, TTC_Camera
+DetectorType = FASTDescriptorType = FREAK
+12.414,28.7003
+TTC_Lidar, TTC_Camera
+DetectorType = FASTDescriptorType = ORB
+12.414,11.9131
+TTC_Lidar, TTC_Camera
+DetectorType = ORBDescriptorType = SIFT
+12.414,-0.316206
+TTC_Lidar, TTC_Camera
+DetectorType = ORBDescriptorType = BRIEF
+12.414,19.5493
+TTC_Lidar, TTC_Camera
+DetectorType = ORBDescriptorType = BRISK
+12.414,16.5247
+TTC_Lidar, TTC_Camera
+DetectorType = ORBDescriptorType = FREAK
+12.414,10.676
+TTC_Lidar, TTC_Camera
+DetectorType = ORBDescriptorType = ORB
+12.414,-inf
+TTC_Lidar, TTC_Camera
+DetectorType = BRISKDescriptorType = SIFT
+12.414,29.5344
+TTC_Lidar, TTC_Camera
+DetectorType = BRISKDescriptorType = BRIEF
+12.414,20.1772
+TTC_Lidar, TTC_Camera
+DetectorType = BRISKDescriptorType = BRISK
+12.414,22.8578
+TTC_Lidar, TTC_Camera
+DetectorType = BRISKDescriptorType = FREAK
+12.414,22.2868
+TTC_Lidar, TTC_Camera
+DetectorType = BRISKDescriptorType = ORB
+12.414,23.0117
+TTC_Lidar,TTC_Camera
+DetectorType = AKAZE, DescriptorType = AKAZE
+12.414,14.7021

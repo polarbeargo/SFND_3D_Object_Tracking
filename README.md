@@ -11,7 +11,7 @@ In this final project, you will implement the missing parts in the schematic. To
 4. And lastly, you will conduct various tests with the framework. Your goal is to identify the most suitable detector/descriptor combination for TTC estimation and also to search for problems that can lead to faulty measurements by the camera or Lidar sensor. In the last course of this Nanodegree, you will learn about the Kalman filter, which is a great way to combine the two independent TTC measurements into an improved version which is much more reliable than a single sensor alone can be. But before we think about such things, let us focus on your final project in the camera course.  
 
 ### FP.1 Match 3D Objects  
-We implement the method "matchBoundingBoxes", which takes as input both the previous and the current data frames and provides as output the ids of the matched regions of interest (i.e. the boxID property)“. Matches must be the ones with the highest number of keypoint correspondences. camFusion_Student.cpp [line 270](https://github.com/polarbeargo/SFND_3D_Object_Tracking/blob/fa846c002604e33aedb2b8435cda5b764dc3a105/src/camFusion_Student.cpp#L270) 
+We implement the method "matchBoundingBoxes", which takes as input both the previous and the current data frames and provides as output the ids of the matched regions of interest (i.e. the boxID property)“. Matches must be the ones with the highest number of keypoint correspondences. camFusion_Student.cpp [line 270](https://github.com/polarbeargo/SFND_3D_Object_Tracking/blob/5042e1c4bd76740d2f4514f1463f36df761caf50/src/camFusion_Student.cpp#L270) 
 ### FP.2 Compute Lidar-based TTC    
 Using only Lidar readings from the matched bounding boxes between the current and previous frame, we calculate the time-to-collision in seconds for all matched 3D objects.   
 camFusion_Student.cpp [line 227](https://github.com/polarbeargo/SFND_3D_Object_Tracking/blob/fa846c002604e33aedb2b8435cda5b764dc3a105/src/camFusion_Student.cpp#L227) 
@@ -29,26 +29,12 @@ Using just keypoint correspondences from the matched bounding boxes between the 
 ### FP.5 Performance Evaluation 1  
 
 Find examples where the TTC estimate of the Lidar sensor does not seem plausible. Describe your observations and provide a sound argumentation why you think this happened.
-When the lidar returns some spots that are obviously not on the vehicle but are much closer than that, the Lidar TTC estimate becomes implausible. The noise in the lidar scans may be caused by airborne dust particles. A extremely low TTC is the end outcome. By using an average distance rather than the nearest point, we may correct this problem and become more resilient to outliers. There are outliers caused by the lidar scanning the vehicle's other surfaces in addition to its back surface, which is another instance of an unreliable Lidar TTC estimate. For instance, the side mirrors, which appear to be considerably farther away than the real back of the car, are being measured by the lidar. 
+When the lidar returns some spots that are obviously not on the vehicle but are much closer than that, the Lidar TTC estimate becomes implausible. The noise in the lidar scans may be caused by airborne dust particles. A extremely low TTC is the end outcome. By using an average distance rather than the nearest point, we may correct this problem and become more resilient to outliers. There are outliers caused by the lidar scanning the vehicle's other surfaces in addition to its back surface, which is another instance of an unreliable Lidar TTC estimate. For instance, the side mirrors, which appear to be considerably farther away than the real back of the car, are being measured by the lidar. Mismatching distances between vehicles, especially during breaking frames. The distance between decelerating cars is often found to be increasing instead of decreasing.
 <img src="images/id4.png" width="779" height="414" />  
 <img src="images/id5topview.png" width="779" height="414" />  
 
 ### FP.6 Performance Evaluation 2   
 Run a variety of detector/descriptor combinations and compare the TTC estimation results. Determine which techniques work best and provide various instances when camera-based TTC prediction is wildly inaccurate. Recap your observations and consider possible causes, much like with Lidar.  
-
-For 1st and 2nd frame: lidar TTC(s): 12.4140
-
-| Camera TTC(s)           |             |         |             |         |         |         |
-| ----------------------- | ----------- | :-----: | :---------: | :-----: | :-----: | :-----: |
-| **Detector/Descriptor** | BRISK       |  BRIEF  |     ORB     |  FREAK  |  AKAZE  |  SIFT   |
-| SHI-TOMASI              | 119.18      | 16.79   |   15.29     | -3.72   |    X    | 16.15 |
-| HARRIS                  | 15.14       | 15.32   |   -inf      | -inf    |    X    | 15.32 |
-| FAST                    | 11.98       | 10.65   |   11.61     | 11.75   |    X    |  11.99  |
-| BRISK                   | 22.86       | 20.18   | 23.01       | 22.29   |    X    | 29.53   |
-| ORB                     | 16.52       | 19.54   |   -inf      | 10.68   |    X    | -0.31 |
-| AKAZE                   | 13.16       | 14.99   |   16.73     | 11.6351 | 11.8071 | 12.273  |
-| SIFT                    | 22.85       | 11.54   |   -inf      | 14.76   |    X    | 13.68 |   
-
 The following lines of code are what the -inf is supposed to be. Because the distribution of the keypoints may not meet the distance criterion, the list of distance ratios is not empty.
 ```
 if (distRatios.size() == 0)
@@ -64,6 +50,7 @@ For our aim of identifying keypoints on cars, the TOP 3 detector / descriptor co
 |   FAST/ BRIEF  |
 |   FAST/ ORB    |
 |   FAST/ FREAK  |
+[Spreadsheet](./src/run_3d_tracking.csv)
 ## Dependencies for Running Locally
 * cmake >= 2.8
   * All OSes: [click here for installation instructions](https://cmake.org/install/)
