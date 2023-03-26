@@ -49,7 +49,8 @@ For our aim of identifying keypoints on cars, the TOP 3 detector / descriptor co
 | -------------- |
 |   FAST/ BRIEF  |
 |   FAST/ ORB    |
-|   FAST/ FREAK  |
+|   FAST/ FREAK  |  
+
 [Spreadsheet](./src/run_3d_tracking.csv)
 ## Dependencies for Running Locally
 * cmake >= 2.8
