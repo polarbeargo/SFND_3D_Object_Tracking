@@ -123,10 +123,7 @@ int run3DObjectTracking(string detectorType, string descriptorType, ImgParam &se
         {
             dataBuffer.erase(dataBuffer.begin());
         }
-        else
-        {
-            dataBuffer.push_back(frame);
-        }
+        dataBuffer.push_back(frame);
 
         cout << "#1 : LOAD IMAGE INTO BUFFER done" << endl;
 
@@ -180,7 +177,7 @@ int run3DObjectTracking(string detectorType, string descriptorType, ImgParam &se
 
         // extract 2D keypoints from current image
         vector<cv::KeyPoint> keypoints; // create empty feature list for current image
-         
+
         if (detectorType.compare("SHITOMASI") == 0)
         {
             detKeypointsShiTomasi(keypoints, imgGray, bVis);
@@ -195,7 +192,7 @@ int run3DObjectTracking(string detectorType, string descriptorType, ImgParam &se
         }
 
         // optional : limit number of keypoints (helpful for debugging and learning)
-        bool bLimitKpts = false;
+        bool bLimitKpts = true;
         if (bLimitKpts)
         {
             int maxKeypoints = 50;
