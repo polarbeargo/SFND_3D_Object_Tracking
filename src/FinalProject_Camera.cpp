@@ -357,9 +357,9 @@ int write_csv(string detectorType, string descriptorType, ImgParam &setParameter
     }
     else
     {
-        setParameters.matcherType = "MAT_BF";
+        setParameters.matcherType = "MAT_FLANN";
         setParameters.descriptorType = "DES_HOG";
-        setParameters.selectorType = "SEL_NN";
+        setParameters.selectorType = "SEL_KNN";
         ret = run3DObjectTracking(detectorType, descriptorType, setParameters, out, bVis);
         checkRet(ret);
     }
