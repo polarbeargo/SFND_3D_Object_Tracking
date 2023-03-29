@@ -345,21 +345,21 @@ int write_csv(string detectorType, string descriptorType, ImgParam &setParameter
     out << "TTC_Lidar"
         << ", "
         << "TTC_Camera" << endl;
-    out << "DetectorType = " << detectorType << "DescriptorType = " << descriptorType << endl;
+    out << "DetectorType = " << detectorType << " DescriptorType = " << descriptorType << endl;
 
-    if (descriptorType == "BRISK")
+    if (descriptorType == "SIFT")
     {
-        setParameters.matcherType = "MAT_BF";
-        setParameters.descriptorType = "DES_BINARY";
-        setParameters.selectorType = "SEL_NN";
+        setParameters.matcherType = "MAT_FLANN";
+        setParameters.descriptorType = "DES_HOG";
+        setParameters.selectorType = "SEL_KNN";
         ret = run3DObjectTracking(detectorType, descriptorType, setParameters, out, bVis);
         checkRet(ret);
     }
     else
     {
-        setParameters.matcherType = "MAT_FLANN";
-        setParameters.descriptorType = "DES_HOG";
-        setParameters.selectorType = "SEL_KNN";
+        setParameters.matcherType = "MAT_BF";
+        setParameters.descriptorType = "DES_BINARY";
+        setParameters.selectorType = "SEL_NN";
         ret = run3DObjectTracking(detectorType, descriptorType, setParameters, out, bVis);
         checkRet(ret);
     }
