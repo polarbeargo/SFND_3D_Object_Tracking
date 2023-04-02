@@ -125,7 +125,7 @@ void show3DObjects(std::vector<BoundingBox> &boundingBoxes, cv::Size worldSize, 
     // display image
     string windowName = "3D Objects";
     cv::namedWindow(windowName, 1);
-    cv::imshow(windowName, topviewImg);
+    cv::imshow(windowName, topviewImg.t());
 
     if (bWait)
     {
@@ -171,6 +171,7 @@ void clusterKptMatchesWithROI(BoundingBox &boundingBox, std::vector<cv::KeyPoint
             boundingBox.kptMatches.erase(boundingBox.kptMatches.begin() + cnt);
         }
     }
+  	cout << "#12 : Finish clusterKptMatchesWithROI" << endl;
 }
 
 // Compute time-to-collision (TTC) based on keypoint correspondences in successive images
@@ -222,6 +223,7 @@ void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPo
 
     double dT = 1 / frameRate;
     TTC = -dT / (1 - medDistRatio);
+  cout << "#13 : Finish computeTTCCamera" << endl;
 }
 
 void computeTTCLidar(std::vector<LidarPoint> &lidarPointsPrev,
@@ -262,7 +264,7 @@ void computeTTCLidar(std::vector<LidarPoint> &lidarPointsPrev,
                                          : lidarPointsCurrX[lidarPtCurrSize / 2];
     double d0 = lidarPtPrevSize % 2 == 0 ? (lidarPointsPrevX[lidarPtPrevSize / 2 - 1] + lidarPointsPrevX[lidarPtPrevSize / 2]) / 2
                                          : lidarPointsPrevX[lidarPtPrevSize / 2];
-
+	cout << "#11 : EXTRACT DESCRIPTORS done" << endl;
     // compute TTC from both measurements
     TTC = d1 * dT / (d0 - d1);
 }
