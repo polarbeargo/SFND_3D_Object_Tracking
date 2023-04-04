@@ -191,20 +191,6 @@ int run3DObjectTracking(string detectorType, string descriptorType, ImgParam &se
             detKeypointsModern(keypoints, imgGray, detectorType, bVis);
         }
 
-        // optional : limit number of keypoints (helpful for debugging and learning)
-        bool bLimitKpts = true;
-        if (bLimitKpts)
-        {
-            int maxKeypoints = 50;
-
-            if (detectorType.compare("SHITOMASI") == 0)
-            { // there is no response info, so keep the first 50 as they are sorted in descending quality order
-                keypoints.erase(keypoints.begin() + maxKeypoints, keypoints.end());
-            }
-            cv::KeyPointsFilter::retainBest(keypoints, maxKeypoints);
-            cout << " NOTE: Keypoints have been limited!" << endl;
-        }
-
         // push keypoints and descriptor for current frame to end of data buffer
         (dataBuffer.end() - 1)->keypoints = keypoints;
 
