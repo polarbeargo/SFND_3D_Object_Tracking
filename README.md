@@ -30,8 +30,24 @@ Using just keypoint correspondences from the matched bounding boxes between the 
 
 Find examples where the TTC estimate of the Lidar sensor does not seem plausible. Describe your observations and provide a sound argumentation why you think this happened.
 When the lidar returns some spots that are obviously not on the vehicle but are much closer than that, the Lidar TTC estimate becomes implausible. The noise in the lidar scans may be caused by airborne dust particles. A extremely low TTC is the end outcome. By using an average distance rather than the nearest point, we may correct this problem and become more resilient to outliers. There are outliers caused by the lidar scanning the vehicle's other surfaces in addition to its back surface, which is another instance of an unreliable Lidar TTC estimate. For instance, the side mirrors, which appear to be considerably farther away than the real back of the car, are being measured by the lidar. Mismatching distances between vehicles, especially during breaking frames. The distance between decelerating cars is often found to be increasing instead of decreasing.
-<img src="images/id4.png" width="779" height="414" />  
-<img src="images/id5topview.png" width="779" height="414" />  
+ 
+Frame 3      |  Frame 4  
+:-------------------------:|:-------------------------:
+<img src="images/id3.png" width="579" height="214" />                  | <img src="images/id4.png" width="579" height="214" />    
+
+Frame 5      |  Frame 6
+:-------------------------:|:-------------------------:
+<img src="images/id5.png" width="579" height="214" />                 | <img src="images/id6.png" width="579" height="214" />   
+
+Frame 3                    |
+:-------------------------:|
+<img src="images/Final Results _TTC_id3.png" width="579" height="214" /> |
+Frame 4                    |
+<img src="images/Final Results _ TTC_id4.png" width="579" height="214" />  |
+Frame 5                    |
+<img src="images/Final Results _ TTC_id5.png" width="579" height="214" /> |  
+Frame 6                    |
+<img src="images/Final Results _ TTC_id6.png" width="579" height="214" />  |
 
 ### FP.6 Performance Evaluation 2   
 Run a variety of detector/descriptor combinations and compare the TTC estimation results. Determine which techniques work best and provide various instances when camera-based TTC prediction is wildly inaccurate. Recap your observations and consider possible causes, much like with Lidar.  
