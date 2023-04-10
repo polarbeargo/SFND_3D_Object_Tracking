@@ -29,7 +29,7 @@ Using just keypoint correspondences from the matched bounding boxes between the 
 ### FP.5 Performance Evaluation 1  
 
 Find examples where the TTC estimate of the Lidar sensor does not seem plausible. Describe your observations and provide a sound argumentation why you think this happened.
-When the lidar returns some spots that are obviously not on the vehicle but are much closer than that, the Lidar TTC estimate becomes implausible. The noise in the lidar scans may be caused by airborne dust particles. A extremely low TTC is the end outcome. By using an average distance rather than the nearest point, we may correct this problem and become more resilient to outliers. There are outliers caused by the lidar scanning the vehicle's other surfaces in addition to its back surface, which is another instance of an unreliable Lidar TTC estimate. For instance, the side mirrors, which appear to be considerably farther away than the real back of the car, are being measured by the lidar. Mismatching distances between vehicles, especially during breaking frames. The distance between decelerating cars is often found to be increasing instead of decreasing.
+When the lidar returns some spots that are obviously not on the vehicle but are much closer than that, the Lidar TTC estimate becomes implausible. The noise in the lidar scans may be caused by airborne dust particles. A extremely low TTC is the end outcome. By using an average distance rather than the nearest point, we may correct this problem and become more resilient to outliers. There are outliers caused by the lidar scanning the vehicle's other surfaces in addition to its back surface, which is another instance of an unreliable Lidar TTC estimate. For instance, the side mirrors, which appear to be considerably farther away than the real back of the car, are being measured by the lidar. Mismatching distances between vehicles, especially during breaking frames. The distance between decelerating cars is often found to be increasing instead of decreasing. Even though the minimum distance in the trial dropped from 7.97 meters to 7.55 meters, the TTC increased from 11.61 to 12.41 seconds this is caused by the broken velocity model. When clustering the lidar with ROI, these points can be removed by by increasing the shrink factor.
  
 Frame 3      |  Frame 4  
 :-------------------------:|:-------------------------:
@@ -59,7 +59,7 @@ if (distRatios.size() == 0)
   return;
 }
 ```   
-
+[Spreadsheet](./src/run_3d_tracking.csv) 
 0      |  1 
 :-------------------------:|:-------------------------:
 <img src="images/0.png" width="579" height="214" />                  | <img src="images/1.png" width="579" height="214" />    
@@ -96,11 +96,12 @@ For our aim of identifying keypoints on cars, the TOP 3 detector / descriptor co
  
 | TOP 3 detector / descriptor |
 | -------------- |
-|   FAST/ BRIEF  |
-|   FAST/ ORB    |
-|   FAST/ FREAK  |  
+|   SIFT / SIFT  |
+|   SIFT / BRIEF    |
+|   AKAZE / AKAZE  |  
 
-[Spreadsheet](./src/run_3d_tracking.csv)
+<img src="images/31.png" width="579" height="214" />    
+
 ## Dependencies for Running Locally
 * cmake >= 2.8
   * All OSes: [click here for installation instructions](https://cmake.org/install/)
